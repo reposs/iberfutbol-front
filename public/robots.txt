@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /buscar?*
+Disallow: /*?refresh=true
+
+Sitemap: https://iberfutbol.es/sitemap.xml
