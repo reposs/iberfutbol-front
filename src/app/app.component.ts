@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './presentation/layout/header.component';
 import { FooterComponent } from './presentation/layout/footer.component';
+import { CookieConsentComponent } from './presentation/components/cookie-consent.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, CookieConsentComponent],
   template: `
     <div class="min-h-screen flex flex-col bg-pitch-950 text-slate-100">
       <a
@@ -20,6 +21,7 @@ import { FooterComponent } from './presentation/layout/footer.component';
         <router-outlet />
       </div>
       <app-footer />
+      <app-cookie-consent />
     </div>
   `,
 })

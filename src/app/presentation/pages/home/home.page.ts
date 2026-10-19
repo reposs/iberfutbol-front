@@ -332,6 +332,35 @@ import { TeamBadgeComponent } from '../../components/team-badge.component';
           </div>
         </section>
 
+        <!-- FAQ SECTION FOR SEO & GEO -->
+        <section aria-labelledby="faq-heading" class="pt-6 border-t border-white/10 space-y-6">
+          <div class="max-w-3xl">
+            <span class="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20">
+              INFORMACIÓN Y PREGUNTAS FRECUENTES
+            </span>
+            <h2 id="faq-heading" class="font-display text-2xl sm:text-3xl font-black text-white mt-2">
+              Preguntas Frecuentes sobre el Fútbol Español
+            </h2>
+            <p class="text-sm text-slate-400 mt-1">
+              Respuestas directas y datos contrastados sobre competiciones, marcadores y clasificaciones oficiales.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            @for (faq of faqs; track faq.question) {
+              <article class="p-5 rounded-2xl border border-white/10 bg-pitch-900/50 hover:border-white/20 transition-colors space-y-2">
+                <h3 class="text-sm sm:text-base font-display font-bold text-slate-100 flex items-start gap-2">
+                  <span class="text-brand-red font-mono font-bold">Q.</span>
+                  <span>{{ faq.question }}</span>
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed pl-5">
+                  {{ faq.answer }}
+                </p>
+              </article>
+            }
+          </div>
+        </section>
+
         <!-- AD PLACEHOLDER 3 -->
         <app-ad-placeholder
           slot="HOME-FOOTER-BANNER"
@@ -345,11 +374,38 @@ export class HomePageComponent implements OnInit {
   readonly facade = inject(FootballFacade);
   private readonly seo = inject(SeoMetaService);
 
+  readonly faqs = [
+    {
+      question: '¿Dónde consultar los resultados y partidos en directo del fútbol español?',
+      answer:
+        'En IberFútbol (iberfutbol.es) puedes seguir marcadores en directo al segundo, resultados de partidos finalizados y horarios de las próximas jornadas de LaLiga EA Sports, LaLiga Hypermotion, Primera y Segunda Federación, Copa del Rey y la Selección Española.',
+    },
+    {
+      question: '¿Con qué frecuencia se actualizan las clasificaciones oficiales?',
+      answer:
+        'Las tablas clasificatorias se recalculan automáticamente en tiempo real al finalizar cada partido disputado, computando puntos, partidos jugados, victorias, empates, derrotas, golaveraje particular y general para definir puestos europeos y de descenso.',
+    },
+    {
+      question: '¿Qué información individual se ofrece sobre futbolistas y plantillas?',
+      answer:
+        'Cada club cuenta con su plantilla actualizada y perfiles individuales con dorsales, nacionalidad, demarcación táctica, edad, valor de mercado estimado, partidos jugados, goles anotados, asistencias y tarjetas acumuladas.',
+    },
+    {
+      question: '¿Es posible buscar clubes y jugadores de todas las categorías?',
+      answer:
+        'Sí, el buscador global indexa simultáneamente clubes, estadios, entrenadores y futbolistas de Primera División, Segunda División, Primera RFEF y competiciones coperas nacionales.',
+    },
+  ];
+
   ngOnInit(): void {
     this.seo.updatePageSeo({
       title: 'El Fútbol Español, en un solo lugar',
       description:
         'Portal deportivo profesional del fútbol español: partidos en directo, resultados, clasificaciones de LaLiga, Segunda, Primera RFEF, equipos, jugadores y noticias.',
+      structuredData: [
+        this.seo.buildWebsiteSchema(),
+        this.seo.buildFaqSchema(this.faqs),
+      ],
     });
     this.facade.loadHomeDashboard();
   }

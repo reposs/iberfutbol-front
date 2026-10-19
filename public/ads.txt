@@ -1,0 +1,5 @@
+# ads.txt - IberFútbol (https://iberfutbol.es)
+# Authorized Digital Sellers standard (IAB Tech Lab)
+# Sustituir 'pub-0000000000000000' con el Publisher ID oficial de Google AdSense una vez aprobada la cuenta
+
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

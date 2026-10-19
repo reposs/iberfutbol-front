@@ -219,6 +219,21 @@ export class SeoMetaService {
     };
   }
 
+  buildFaqSchema(faqs: { question: string; answer: string }[]): Record<string, unknown> {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      })),
+    };
+  }
+
   private updateCanonicalLink(canonicalUrl: string): void {
     let link = this.doc.getElementById('canonical-link') as HTMLLinkElement | null;
     if (!link) {

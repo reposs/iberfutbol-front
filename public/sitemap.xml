@@ -2,101 +2,121 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://iberfutbol.es/</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/partidos/hoy</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>always</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/partidos/ayer</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/partidos/manana</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/calendario</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/competiciones</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/competiciones/laliga-ea-sports</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/competiciones/laliga-hypermotion</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/competiciones/copa-del-rey</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/clasificacion/laliga-ea-sports</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/clasificacion/laliga-hypermotion</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/equipos</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/equipos/fc-barcelona</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/equipos/real-madrid</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/equipos/atletico-de-madrid</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/jugadores</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/jugadores/lamine-yamal</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/partidos/barcelona-sevilla</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>always</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/noticias</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://iberfutbol.es/actualidad</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>always</changefreq>
     <priority>0.90</priority>
   </url>

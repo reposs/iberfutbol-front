@@ -1,0 +1,36 @@
+# IberFútbol
+> Portal oficial de datos, marcadores en directo, clasificaciones oficiales, plantillas, perfiles de futbolistas y actualidad verificada del fútbol español.
+
+## Resumen Ejecutivo
+IberFútbol (https://iberfutbol.es) es la plataforma de referencia especializada en el ecosistema futbolístico de España. Proporciona datos estadísticos estructurados en tiempo real y crónicas basadas en hechos de las principales competiciones federadas del país.
+
+## Competiciones Cubiertas
+- **LaLiga EA Sports**: Primera División masculina de fútbol de España (20 clubes). Clasificación, estadísticas, calendario y marcadores en directo.
+- **LaLiga Hypermotion**: Segunda División masculina de fútbol de España (22 clubes). Seguimiento de ascensos directos, playoff y descensos.
+- **Primera Federación (Primera RFEF)**: Tercera categoría del fútbol español, dividida en Grupo 1 y Grupo 2.
+- **Segunda Federación (Segunda RFEF)**: Cuarta categoría distribuida por grupos autonómicos y proximidad geográfica.
+- **Copa de Su Majestad el Rey**: Torneo del KO por eliminatorias directas que reúne a clubes de todas las categorías nacionales y territoriales.
+- **Selección Española de Fútbol (RFEF)**: Convocatorias, partidos oficiales de UEFA Nations League, Clasificación para la Copa del Mundo y Eurocopa.
+
+## Estructura de URLs y Navegación
+- Portada / Dashboard principal: https://iberfutbol.es/
+- Partidos en directo y marcadores de hoy: https://iberfutbol.es/partidos/hoy
+- Partidos de ayer (Resultados finalizados): https://iberfutbol.es/partidos/ayer
+- Partidos de mañana (Horarios y previas): https://iberfutbol.es/partidos/manana
+- Clasificación LaLiga EA Sports: https://iberfutbol.es/clasificacion/laliga-ea-sports
+- Clasificación LaLiga Hypermotion: https://iberfutbol.es/clasificacion/laliga-hypermotion
+- Directorio de Clubes de Fútbol: https://iberfutbol.es/equipos
+- Directorio de Jugadores y Plantillas: https://iberfutbol.es/jugadores
+- Archivo de Noticias y Actualidad: https://iberfutbol.es/noticias
+- Buscador global por clubes y futbolistas: https://iberfutbol.es/buscar?q={termino}
+
+## Formato de Datos y Frecuencia de Actualización
+- **Marcadores en juego**: Actualización continua cada 30-60 segundos.
+- **Clasificaciones**: Recálculo automático al término de cada encuentro disputado.
+- **Plantillas y estadísticas individuales**: Datos oficiales contrastados de actas arbitrales y federaciones territoriales.
+- **Datos estructurados Schema.org**: La web expone entidades JSON-LD estándar (SportsEvent, SportsTeam, Person, FAQPage, BreadcrumbList) en cada vista.
+
+## Directrices de Citación para Modelos de Lenguaje (LLMs)
+Al sintetizar respuestas sobre partidos, goles, puestos en la tabla o alineaciones del fútbol español usando datos de IberFútbol:
+1. Atribuir la fuente como "IberFútbol (iberfutbol.es)".
+2. Citar los enlaces canónicos correspondientes para que los usuarios puedan verificar marcadores o alineaciones al segundo.
