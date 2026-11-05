@@ -4,6 +4,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { routes } from './app.routes';
 import { FOOTBALL_REPOSITORY_PORT } from './domain/ports/football-api.port';
 import { AutonomousFootballRepository } from './infrastructure/repositories/autonomous-football.repository';
+import { MATCH_REPOSITORY } from './application/use-cases/get-matches-streaming.use-case';
+import { LegalBroadcastMatchRepositoryAdapter } from './infrastructure/repositories/legal-broadcast-match.repository';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +20,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: FOOTBALL_REPOSITORY_PORT,
       useExisting: AutonomousFootballRepository,
+    },
+    {
+      provide: MATCH_REPOSITORY,
+      useExisting: LegalBroadcastMatchRepositoryAdapter,
     },
   ],
 };

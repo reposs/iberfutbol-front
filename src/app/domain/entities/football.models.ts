@@ -143,6 +143,9 @@ export interface Match {
   referee: string;
   attendance?: number;
   broadcastChannel?: string;
+  broadcastUrl?: string;
+  highlightsUrl?: string;
+  isFreeToAir?: boolean;
   homeTeam: MatchTeamSummary;
   awayTeam: MatchTeamSummary;
   events: MatchEvent[];

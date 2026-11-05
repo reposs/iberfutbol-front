@@ -25,12 +25,41 @@ import {
   BrowserAiEditorialEngine,
   calculatePlayerDerivedMetrics,
 } from '../autonomous/ai-editorial-browser.engine';
+import { LegalBroadcastPolicy } from '../../domain/entities/match-broadcast.entity';
 
 @Injectable({ providedIn: 'root' })
 export class AutonomousFootballRepository implements FootballRepositoryPort {
   private readonly liveProvider = inject(LiveSpanishBrowserProvider);
   private readonly newsProvider = inject(PermittedSpanishNewsBrowserProvider);
   private readonly aiEngine = inject(BrowserAiEditorialEngine);
+
+  private enrichMatchesWithLegalBroadcast(matches: Match[]): Match[] {
+    return matches.map((m) => this.enrichSingleMatchBroadcast(m));
+  }
+
+  private enrichSingleMatchBroadcast(m: Match): Match {
+    const status =
+      m.status === 'LIVE' || m.status === 'FINISHED' ? m.status : 'UPCOMING';
+    const resolved = LegalBroadcastPolicy.resolveOfficialBroadcast({
+      competitionSlug: m.competitionSlug,
+      broadcastChannel: m.broadcastChannel,
+      status,
+      homeTeam: m.homeTeam.name,
+      awayTeam: m.awayTeam.name,
+    });
+    return {
+      ...m,
+      broadcastChannel: resolved.broadcastChannel,
+      broadcastUrl: resolved.broadcastUrl,
+      highlightsUrl: resolved.highlightsUrl,
+      isFreeToAir: resolved.isFreeToAir,
+    };
+  }
+
+  private async fetchAllEnrichedMatches(): Promise<Match[]> {
+    const raw = await this.liveProvider.fetchAllMatches();
+    return this.enrichMatchesWithLegalBroadcast(raw);
+  }
 
   private normalizeCompetitionFilter(slug?: string): string | undefined {
     if (!slug || slug === 'todos' || slug === 'todas' || slug === 'all') {
@@ -105,7 +134,7 @@ export class AutonomousFootballRepository implements FootballRepositoryPort {
       (async () => {
         const dateIso = this.resolveDateIso(day || 'hoy');
         const compFilter = this.normalizeCompetitionFilter(competition);
-        const allMatches = await this.liveProvider.fetchAllMatches();
+        const allMatches = await this.fetchAllEnrichedMatches();
 
         const forComp = compFilter
           ? allMatches.filter((m) => m.competitionSlug === compFilter)
@@ -141,7 +170,7 @@ export class AutonomousFootballRepository implements FootballRepositoryPort {
     return from(
       (async () => {
         const compFilter = this.normalizeCompetitionFilter(competition);
-        const allMatches = await this.liveProvider.fetchAllMatches();
+        const allMatches = await this.fetchAllEnrichedMatches();
         if (!compFilter) return allMatches;
         return allMatches.filter((m) => m.competitionSlug === compFilter);
       })(),
@@ -151,7 +180,7 @@ export class AutonomousFootballRepository implements FootballRepositoryPort {
   getLiveMatches(): Observable<Match[]> {
     return from(
       (async () => {
-        const allMatches = await this.liveProvider.fetchAllMatches();
+        const allMatches = await this.fetchAllEnrichedMatches();
         return allMatches.filter((m) => m.status === 'LIVE');
       })(),
     );
@@ -160,7 +189,7 @@ export class AutonomousFootballRepository implements FootballRepositoryPort {
   getFeaturedMatches(): Observable<Match[]> {
     return from(
       (async () => {
-        const allMatches = await this.liveProvider.fetchAllMatches();
+        const allMatches = await this.fetchAllEnrichedMatches();
         const featured = allMatches.filter((m) => m.isFeatured);
         const todayIso = new Date().toISOString().slice(0, 10);
         const topSlugs = new Set([
@@ -197,7 +226,7 @@ export class AutonomousFootballRepository implements FootballRepositoryPort {
   getMatchDetails(slug: string): Observable<MatchDetailsResponse> {
     return from(
       (async () => {
-        const allMatches = await this.liveProvider.fetchAllMatches();
+        const allMatches = await this.fetchAllEnrichedMatches();
         const normalized = slug.toLowerCase();
         const match =
           allMatches.find(
@@ -263,7 +292,7 @@ export class AutonomousFootballRepository implements FootballRepositoryPort {
         const normalized = this.normalizeTeamAlias(slug);
         const [allTeams, allMatches, allPlayers, allNews] = await Promise.all([
           this.liveProvider.fetchAllTeams(),
-          this.liveProvider.fetchAllMatches(),
+          this.fetchAllEnrichedMatches(),
           this.liveProvider.fetchPlayers(),
           this.newsProvider.fetchLatestPermittedNews(),
         ]);
@@ -379,7 +408,7 @@ export class AutonomousFootballRepository implements FootballRepositoryPort {
         const normalized = slug.toLowerCase();
         const [allPlayers, allMatches, allNews] = await Promise.all([
           this.liveProvider.fetchPlayers(),
-          this.liveProvider.fetchAllMatches(),
+          this.fetchAllEnrichedMatches(),
           this.newsProvider.fetchLatestPermittedNews(),
         ]);
 
@@ -479,7 +508,7 @@ export class AutonomousFootballRepository implements FootballRepositoryPort {
             this.liveProvider.fetchCompetitions(),
             this.liveProvider.fetchAllTeams(),
             this.liveProvider.fetchPlayers(),
-            this.liveProvider.fetchAllMatches(),
+            this.fetchAllEnrichedMatches(),
             this.newsProvider.fetchLatestPermittedNews(),
           ],
         );
@@ -548,7 +577,7 @@ export class AutonomousFootballRepository implements FootballRepositoryPort {
     return from(
       (async () => {
         const [allMatches, allTeams] = await Promise.all([
-          this.liveProvider.fetchAllMatches(),
+          this.fetchAllEnrichedMatches(),
           this.liveProvider.fetchAllTeams(),
         ]);
         const normalized = slug.toLowerCase();
@@ -591,7 +620,7 @@ export class AutonomousFootballRepository implements FootballRepositoryPort {
           competitionSlug.toLowerCase();
         const [comps, matches, standings, players] = await Promise.all([
           this.liveProvider.fetchCompetitions(),
-          this.liveProvider.fetchAllMatches(),
+          this.fetchAllEnrichedMatches(),
           this.liveProvider.fetchStandings(normalized),
           this.liveProvider.fetchPlayers(),
         ]);

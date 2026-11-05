@@ -319,6 +319,7 @@ export class HeaderComponent implements OnInit {
   readonly navItems = [
     { label: 'Inicio', route: '/', exact: true },
     { label: 'Partidos', route: '/partidos/hoy', exact: false },
+    { label: 'TV / Resúmenes', route: '/tv-en-directo', exact: false },
     { label: 'Clasificaciones', route: '/clasificacion/laliga-ea-sports', exact: false },
     { label: 'Competiciones', route: '/competiciones', exact: false },
     { label: 'Equipos', route: '/equipos', exact: false },

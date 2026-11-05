@@ -148,6 +148,39 @@ import { BreadcrumbNavComponent } from '../../components/breadcrumb-nav.componen
                   📺 Emisión oficial: {{ m.broadcastChannel }}
                 </span>
               }
+              <div class="mt-3 flex flex-wrap items-center justify-center gap-2">
+                @if (m.status === 'LIVE' && m.broadcastUrl) {
+                  <a
+                    [href]="m.broadcastUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="px-3.5 py-1.5 rounded-xl bg-brand-red hover:bg-rose-600 text-white text-xs font-display font-bold transition-colors inline-flex items-center gap-1.5 shadow-lg shadow-brand-red/20"
+                  >
+                    <span>📺 Ver emisión oficial en directo</span>
+                    <span>↗</span>
+                  </a>
+                } @else if (m.status === 'FINISHED' && m.highlightsUrl) {
+                  <a
+                    [href]="m.highlightsUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="px-3.5 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-300 text-xs font-mono font-bold transition-colors inline-flex items-center gap-1.5"
+                  >
+                    <span>▶ Ver resumen oficial (YouTube / RTVE)</span>
+                    <span>↗</span>
+                  </a>
+                } @else if (m.status === 'UPCOMING' && m.broadcastUrl) {
+                  <a
+                    [href]="m.broadcastUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="px-3.5 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-bold transition-colors inline-flex items-center gap-1.5"
+                  >
+                    <span>📺 Guía de emisión oficial</span>
+                    <span>↗</span>
+                  </a>
+                }
+              </div>
             </div>
 
             <!-- Away Team -->

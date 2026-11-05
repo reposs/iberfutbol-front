@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { matchesBroadcastResolver } from './infrastructure/resolvers/matches-broadcast.resolver';
 
 export const routes: Routes = [
   {
@@ -6,6 +7,22 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./presentation/pages/home/home.page').then(
         (m) => m.HomePageComponent,
+      ),
+  },
+  {
+    path: 'tv-en-directo',
+    resolve: { initialMatches: matchesBroadcastResolver },
+    loadComponent: () =>
+      import('./presentation/pages/streaming/matches-streaming.page').then(
+        (m) => m.MatchesStreamingPageComponent,
+      ),
+  },
+  {
+    path: 'streaming',
+    resolve: { initialMatches: matchesBroadcastResolver },
+    loadComponent: () =>
+      import('./presentation/pages/streaming/matches-streaming.page').then(
+        (m) => m.MatchesStreamingPageComponent,
       ),
   },
   {

@@ -116,14 +116,31 @@ import { TeamBadgeComponent } from './team-badge.component';
             </span>
           }
         </div>
-      } @else if (match().broadcastChannel) {
+      }
+
+      @if (match().broadcastChannel) {
         <div
-          class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400"
+          class="mt-3 pt-3 border-t border-white/5 flex items-center justify-between gap-2 text-xs text-slate-400"
         >
-          <span>📺 {{ match().broadcastChannel }}</span>
-          <span class="text-emerald-400 group-hover:translate-x-0.5 transition-transform font-semibold">
-            Ver centro de datos →
+          <span class="truncate">
+            📺 {{ match().broadcastChannel }}
+            @if (match().isFreeToAir) {
+              <strong class="text-emerald-400 font-mono text-[10px] ml-1">(EN ABIERTO)</strong>
+            }
           </span>
+          @if (match().status === 'LIVE') {
+            <span class="text-brand-red font-mono font-bold shrink-0">
+              Emisión activa →
+            </span>
+          } @else if (match().status === 'FINISHED') {
+            <span class="text-cyan-300 font-mono font-semibold shrink-0">
+              ▶ Resumen y acta →
+            </span>
+          } @else {
+            <span class="text-emerald-400 group-hover:translate-x-0.5 transition-transform font-semibold shrink-0">
+              Ver previa →
+            </span>
+          }
         </div>
       }
     </a>
