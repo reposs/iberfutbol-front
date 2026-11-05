@@ -1,5 +1,17 @@
-import { Component, computed, inject, input } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  inject,
+  input,
+} from '@angular/core';
 import { MONETIZATION_CONFIG } from '../../core/config/monetization.config';
+
+declare global {
+  interface Window {
+    adsbygoogle?: unknown[];
+  }
+}
 
 @Component({
   selector: 'app-ad-placeholder',
@@ -51,7 +63,9 @@ import { MONETIZATION_CONFIG } from '../../core/config/monetization.config';
     </aside>
   `,
 })
-export class AdPlaceholderComponent {
+export class AdPlaceholderComponent implements AfterViewInit {
+  private static scriptInjected = false;
+
   readonly config = inject(MONETIZATION_CONFIG);
   readonly slot = input<string>('LEADERBOARD-970x90');
   readonly adSlotNumber = input<string>('1234567890');
@@ -62,4 +76,41 @@ export class AdPlaceholderComponent {
   readonly badgeText = computed(() =>
     this.config.activeCommercialAds ? 'PATROCINIO OFICIAL' : 'IBERFÚTBOL EN VIVO',
   );
+
+  ngAfterViewInit(): void {
+    if (
+      typeof window === 'undefined' ||
+      !this.config.activeCommercialAds ||
+      !this.config.adsenseClientId
+    ) {
+      return;
+    }
+
+    try {
+      this.ensureAdSenseScriptLoaded(this.config.adsenseClientId);
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch {
+      // Adblocker or script pending load
+    }
+  }
+
+  private ensureAdSenseScriptLoaded(clientId: string): void {
+    if (AdPlaceholderComponent.scriptInjected || typeof document === 'undefined') {
+      return;
+    }
+    const existing = document.querySelector(
+      'script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]',
+    );
+    if (existing) {
+      AdPlaceholderComponent.scriptInjected = true;
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(clientId)}`;
+    script.crossOrigin = 'anonymous';
+    document.head.appendChild(script);
+    AdPlaceholderComponent.scriptInjected = true;
+  }
 }

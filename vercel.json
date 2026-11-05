@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/((?!ads\\.txt|robots\\.txt|sitemap\\.xml|llms\\.txt|.*\\..*).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
