@@ -1,4 +1,0 @@
-# Redirección SPA para Cloudflare Pages / Netlify
-# Los archivos estáticos reales (como /ads.txt, /robots.txt, /sitemap.xml, *.js, *.css)
-# se sirven directamente; cualquier ruta de Angular Router devuelve /index.html con HTTP 200.
-/*    /index.html   200
