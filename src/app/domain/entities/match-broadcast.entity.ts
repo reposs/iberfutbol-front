@@ -39,7 +39,7 @@ export interface Match {
   broadcastUrl?: string;
   /** Official legal highlights / replay link for FINISHED matches */
   highlightsUrl?: string;
-  /** Indicates if the official broadcast or highlight is free-to-air (e.g., RTVE Play, Gol Play, Official YouTube) */
+  /** Indicates if the official broadcast or highlight is free-to-air (e.g., RTVE Play, Official YouTube) */
   isFreeToAir: boolean;
 }
 
@@ -60,8 +60,6 @@ export class LegalBroadcastPolicy {
     'www.laliga.com',
     'rfef.es',
     'www.rfef.es',
-    'goltelevision.com',
-    'www.goltelevision.com',
   ];
 
   static isOfficialLegalUrl(rawUrl?: string): boolean {
@@ -73,7 +71,15 @@ export class LegalBroadcastPolicy {
       if (parsed.protocol !== 'https:') {
         return false;
       }
-      return this.ALLOWED_OFFICIAL_HOSTS.includes(parsed.hostname.toLowerCase());
+      const host = parsed.hostname.toLowerCase();
+      if (!this.ALLOWED_OFFICIAL_HOSTS.includes(host)) {
+        return false;
+      }
+      // Block any accidental link to the unrelated @rfef handle (official RFEF is @RFEFutbol)
+      if (parsed.pathname.toLowerCase().startsWith('/@rfef/')) {
+        return false;
+      }
+      return true;
     } catch {
       return false;
     }
@@ -94,9 +100,6 @@ export class LegalBroadcastPolicy {
   } {
     const channelLower = (params.broadcastChannel || '').toLowerCase();
     const comp = params.competitionSlug;
-    const query = encodeURIComponent(
-      `resumen ${params.homeTeam} vs ${params.awayTeam} oficial`,
-    );
 
     if (
       comp === 'copa-del-rey' ||
@@ -105,11 +108,14 @@ export class LegalBroadcastPolicy {
       channelLower.includes('rtve') ||
       channelLower.includes('teledeporte')
     ) {
+      const search = encodeURIComponent(
+        `Resumen ${params.homeTeam} vs ${params.awayTeam} Copa del Rey RFEFutbol RTVE`,
+      );
       return {
         broadcastChannel: params.broadcastChannel || 'La 1 TVE / RTVE Play',
         broadcastPlatform: 'RTVE_PLAY',
-        broadcastUrl: 'https://www.rtve.es/play/deportes/futbol/',
-        highlightsUrl: 'https://www.rtve.es/play/deportes/futbol/',
+        broadcastUrl: 'https://www.rtve.es/play/teledeporte/',
+        highlightsUrl: `https://www.youtube.com/results?search_query=${search}`,
         isFreeToAir: true,
       };
     }
@@ -120,21 +126,42 @@ export class LegalBroadcastPolicy {
       channelLower.includes('feftv') ||
       channelLower.includes('rfef')
     ) {
+      const search = encodeURIComponent(
+        `Resumen ${params.homeTeam} vs ${params.awayTeam} RFEFutbol Primera Federacion`,
+      );
       return {
-        broadcastChannel: params.broadcastChannel || 'RFEF TV / FEF TV Oficial',
+        broadcastChannel: params.broadcastChannel || 'RFEF TV (@RFEFutbol) / FEF TV',
         broadcastPlatform: 'RFEF_OFFICIAL',
-        broadcastUrl: 'https://www.youtube.com/@rfef/streams',
-        highlightsUrl: `https://www.youtube.com/@rfef/search?query=${query}`,
+        broadcastUrl: 'https://www.youtube.com/@RFEFutbol',
+        highlightsUrl: `https://www.youtube.com/results?search_query=${search}`,
         isFreeToAir: true,
       };
     }
 
+    if (comp === 'laliga-hypermotion') {
+      const search = encodeURIComponent(
+        `Resumen ${params.homeTeam} vs ${params.awayTeam} LALIGA HYPERMOTION`,
+      );
+      return {
+        broadcastChannel:
+          params.broadcastChannel || 'LaLiga TV Hypermotion (DAZN / Movistar+)',
+        broadcastPlatform: 'DAZN',
+        broadcastUrl: 'https://www.dazn.com/es-ES/home',
+        highlightsUrl: `https://www.youtube.com/results?search_query=${search}`,
+        isFreeToAir: false,
+      };
+    }
+
+    const laligaSearch = encodeURIComponent(
+      `Resumen ${params.homeTeam} vs ${params.awayTeam} LALIGA EA SPORTS`,
+    );
+
     if (channelLower.includes('gol')) {
       return {
-        broadcastChannel: params.broadcastChannel || 'GOL Play (En abierto)',
+        broadcastChannel: params.broadcastChannel || 'GOL Play / LaLiga TV (En abierto)',
         broadcastPlatform: 'GOL_PLAY',
-        broadcastUrl: 'https://www.goltelevision.com/en-directo',
-        highlightsUrl: `https://www.youtube.com/@LaLiga/search?query=${query}`,
+        broadcastUrl: 'https://www.youtube.com/@LaLiga',
+        highlightsUrl: `https://www.youtube.com/results?search_query=${laligaSearch}`,
         isFreeToAir: true,
       };
     }
@@ -143,29 +170,18 @@ export class LegalBroadcastPolicy {
       return {
         broadcastChannel: params.broadcastChannel || 'DAZN LaLiga',
         broadcastPlatform: 'DAZN',
-        broadcastUrl: 'https://www.dazn.com/es-ES/competition/Competition:2x2dh1g60013726l2336426p',
-        highlightsUrl: `https://www.youtube.com/@LaLiga/search?query=${query}`,
-        isFreeToAir: false,
-      };
-    }
-
-    if (comp === 'laliga-hypermotion') {
-      return {
-        broadcastChannel:
-          params.broadcastChannel || 'LaLiga TV Hypermotion (DAZN / Movistar+)',
-        broadcastPlatform: 'DAZN',
-        broadcastUrl: 'https://www.laliga.com/es-GB/donde-ver-laliga-hypermotion',
-        highlightsUrl: `https://www.youtube.com/@LaLigaHypermotion/search?query=${query}`,
+        broadcastUrl: 'https://www.dazn.com/es-ES/home',
+        highlightsUrl: `https://www.youtube.com/results?search_query=${laligaSearch}`,
         isFreeToAir: false,
       };
     }
 
     return {
       broadcastChannel:
-        params.broadcastChannel || 'Movistar LaLiga TV / DAZN Oficial',
+        params.broadcastChannel || 'Movistar Plus+ LaLiga / DAZN',
       broadcastPlatform: 'MOVISTAR_PLUS',
-      broadcastUrl: 'https://www.laliga.com/es-GB/donde-ver-laliga-ea-sports',
-      highlightsUrl: `https://www.youtube.com/@LaLiga/search?query=${query}`,
+      broadcastUrl: 'https://www.movistarplus.es/deportes/futbol',
+      highlightsUrl: `https://www.youtube.com/results?search_query=${laligaSearch}`,
       isFreeToAir: false,
     };
   }

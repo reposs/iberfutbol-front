@@ -29,7 +29,7 @@ import { AdPlaceholderComponent } from '../../components/ad-placeholder.componen
               Fútbol en Directo, TV Oficial y Resúmenes
             </h1>
             <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Consulta dónde ver legalmente cada partido del fútbol español en directo (RTVE Play, DAZN, Movistar Plus+, RFEF TV y GOL Play) y accede a los resúmenes oficiales en vídeo tras el pitido final.
+              Consulta dónde ver legalmente cada partido del fútbol español en directo (RTVE Play Teledeporte, DAZN, Movistar Plus+ y @RFEFutbol) y accede a los resúmenes oficiales en vídeo tras el pitido final.
             </p>
           </div>
 
@@ -82,6 +82,61 @@ import { AdPlaceholderComponent } from '../../components/ad-placeholder.componen
           >
             {{ useCase.onlyFreeToAir() ? '✓ Solo emisiones en abierto (RTVE / RFEF / GOL)' : 'Filtrar emisiones en abierto (Gratis)' }}
           </button>
+        </div>
+
+        <!-- Direct Official Broadcaster & Video Channels Strip -->
+        <div class="pt-4 border-t border-white/10 flex flex-wrap items-center gap-2 text-xs">
+          <span class="font-mono text-slate-400 uppercase text-[11px] mr-1">
+            Canales oficiales verificados:
+          </span>
+          <a
+            href="https://www.youtube.com/@LaLiga"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-3 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 font-mono transition-colors"
+          >
+            ▶ YouTube @LaLiga ↗
+          </a>
+          <a
+            href="https://www.youtube.com/@LALIGAHYPERMOTION"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-3 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 font-mono transition-colors"
+          >
+            ▶ YouTube @LALIGAHYPERMOTION ↗
+          </a>
+          <a
+            href="https://www.youtube.com/@RFEFutbol"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-3 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 font-mono transition-colors"
+          >
+            ▶ YouTube @RFEFutbol (RFEF) ↗
+          </a>
+          <a
+            href="https://www.rtve.es/play/teledeporte/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-3 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 font-mono transition-colors"
+          >
+            📺 RTVE Play Teledeporte ↗
+          </a>
+          <a
+            href="https://www.dazn.com/es-ES/home"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-3 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 font-mono transition-colors"
+          >
+            📺 DAZN España ↗
+          </a>
+          <a
+            href="https://www.movistarplus.es/deportes/futbol"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-3 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 font-mono transition-colors"
+          >
+            📺 Movistar Plus+ Fútbol ↗
+          </a>
         </div>
       </section>
 
@@ -293,7 +348,7 @@ import { AdPlaceholderComponent } from '../../components/ad-placeholder.componen
         <section class="space-y-4">
           <div>
             <span class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold block">
-              VIDEOTECA OFICIAL · YOUTUBE LALIGA / RTVE PLAY / RFEF
+              VIDEOTECA OFICIAL · @LALIGA / @LALIGAHYPERMOTION / @RFEFUTBOL / RTVE PLAY
             </span>
             <h2 class="font-display text-xl sm:text-2xl font-black text-white">
               Partidos Finalizados y Resúmenes Oficiales ({{ useCase.pastMatches().length }})
@@ -388,8 +443,8 @@ import { AdPlaceholderComponent } from '../../components/ad-placeholder.componen
         </div>
         <p class="leading-relaxed">
           IberFútbol verifica todas las fuentes de vídeo mediante su política de dominio (<code>LegalBroadcastPolicy</code>) y enlaza exclusivamente a plataformas oficiales con derechos audiovisuales en España:
-          <strong>RTVE Play</strong> (Copa del Rey y Selección Española en abierto),
-          <strong>DAZN</strong>, <strong>Movistar Plus+</strong>, <strong>GOL Play</strong> y los canales oficiales de resúmenes de <strong>LaLiga</strong> y la <strong>RFEF</strong> en YouTube.
+          <strong>RTVE Play Teledeporte</strong> (Copa del Rey y Selección Española en abierto),
+          <strong>DAZN</strong>, <strong>Movistar Plus+</strong> y los canales oficiales verificados de <strong>LaLiga</strong> (<code>@LaLiga</code> y <code>@LALIGAHYPERMOTION</code>) y la <strong>RFEF</strong> (<code>@RFEFutbol</code>) en YouTube.
         </p>
       </section>
 
@@ -435,7 +490,7 @@ export class MatchesStreamingPageComponent implements OnInit {
     this.seo.updatePageSeo({
       title: 'Dónde Ver Fútbol en Directo y Resúmenes Oficiales — TV Legal',
       description:
-        'Guía oficial de retransmisiones en directo (RTVE Play, DAZN, Movistar Plus+, RFEF TV) y resúmenes legales en vídeo de LaLiga, Segunda, Copa del Rey y Selección.',
+        'Guía oficial de retransmisiones en directo (RTVE Play Teledeporte, DAZN, Movistar Plus+, @RFEFutbol) y resúmenes legales en vídeo de LaLiga, Segunda, Copa del Rey y Selección.',
       canonicalPath: '/tv-en-directo',
     });
   }
